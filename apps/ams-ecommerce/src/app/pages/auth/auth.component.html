@@ -1,0 +1,24 @@
+<div class="flex items-center justify-center h-screen">
+    <form [formGroup]="authForm" class="flex flex-col p-10 gap-4 rounded-md shadow-md" (submit)="handleAuthentication()">
+        <h1 class="text-center text-xl font-bold">{{isLogin?'Login':'Register'}}</h1>
+        <label for="" [class]="isLogin?'hidden':''" class="border w-[350px] py-3.5 pl-2 rounded">
+            <input [formControl]="getControl('firstName')" type="text" class="outline-none w-full text-lg" placeholder="First Name" >
+        </label>
+        <label for="" [class]="isLogin?'hidden':''" class="border w-[350px] py-3.5 pl-2 rounded">
+            <input [formControl]="getControl('lastName')" type="text" class="outline-none w-full text-lg" placeholder="Last Name" >
+        </label>
+        <label for="" class="border w-[350px]  py-3.5 pl-2 rounded">
+            <input [formControl]="getControl('email')" type="email" class="outline-none w-full text-lg" placeholder="Email" >
+        </label>
+        <label for="" class="border w-[350px]  py-3.5 pl-2 rounded">
+            <input [formControl]="getControl('password')" type="password" class="outline-none w-full text-lg" placeholder="Password" >
+        </label>
+        <label for="" [class]="isLogin?'hidden':''" class="border w-[350px]  py-3.5 pl-2 rounded">
+            <input [formControl]="getControl('correctPassword')" type="password" class="outline-none w-full text-lg" placeholder="Correct Password" >
+        </label>
+        <p class="text-red-500" [class]="displayError()?'hidden':''">password does not match</p>
+        <button class="text-white bg-[#ff7900] p-3 rounded-md font-bold">{{ isLogin ? 'Login' : 'Register'}}</button>
+
+        <p (click)="handleSwitch()"  class="text-center cursor-pointer">{{isLogin ? 'Dont have an Account? Register':'Already have an account? Login'}}</p>
+    </form>
+</div>

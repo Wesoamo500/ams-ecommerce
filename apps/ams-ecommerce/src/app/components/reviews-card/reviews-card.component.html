@@ -1,0 +1,16 @@
+<div class="border p-7 relative flex flex-col gap-4">
+    <div class="border absolute w-[50px] h-[50px] rounded-full flex items-center justify-center -top-[25px] z-1 bg-[#e1b792] text-white">{{avatar(reviews.user)}}</div>
+    <div class=" absolute top-2 border px-1 rounded bg-[#ff7900] text-[10px] font-bold text-white self-end">Ratings: {{reviews.ratings}}</div>
+    <div>
+        {{reviews.comment}}
+    </div>
+    <div class="flex-col gap-2" [class]="isComment?'hidden':'flex'">
+        @for (reply of reviews.replies; track $index) {
+            <div class="flex items-center gap-2 ml-4">
+                <div class=" w-[30px] h-[30px] rounded-full flex items-center justify-center  bg-[#e1b792] text-white">{{reply['user']!.charAt(0).toUpperCase()}}</div>
+                <div class="overflow-ellipsis w-9/10">{{reply['reply']}}</div>
+            </div>
+        }
+    </div>
+    <button (click)="openComment()" class="self-end text-blue-300">comments...</button>
+</div>

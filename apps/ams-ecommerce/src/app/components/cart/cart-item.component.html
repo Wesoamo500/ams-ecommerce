@@ -1,0 +1,15 @@
+<div class=" p-4 flex flex-col gap-3">
+    <div class="flex justify-between items-center">
+        <img [src]="product[0].images[0].thumbnail" class="w-[55px] rounded" alt="">
+        <div class="flex flex-col gap-2">
+            <p class="text-[12px]">{{product[0].title}}</p>
+            <p class="text-[12px] flex gap-2">{{product[0].price * product[0].discountPercent| currency}} x
+                {{product[0].quantity}}<span class="text-[#3e3e3e] font-bold">{{product[0].price *
+                    product[0].discountPercent * product[0].quantity | currency}}</span></p>
+        </div>
+        <button (click)="removeProductFromCart(product[0].productId)">
+            <img src="../../../assets/images/icon-delete.svg" class="h-5" alt="">
+        </button>
+    </div>
+    <button class="text-white text-sm font-bold py-2 rounded bg-[#ff7900]">Checkout</button>
+</div>
