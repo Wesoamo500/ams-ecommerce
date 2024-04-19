@@ -1,0 +1,127 @@
+<div
+  [class]="
+    openEditProfileModal() || openAddressModal()
+      ? 'overflow-hidden ease-in'
+      : 'overflow-auto ease-out'
+  "
+  class="border h-[93%] relative"
+>
+  <section class="p-14">
+    <div class="flex items-center gap-6 border-b pb-9 w-[770px]">
+      <div class="w-14 h-14 border rounded-full"></div>
+      <div>
+        <p>Mr. Suleman Abdul Manan</p>
+        <p class="flex items-center gap-3">
+          <span>Email: sulemanabdulmanangmail.com</span>,
+          <span>Phone: +123456789</span
+          ><span
+            ><button
+              class="hover:animate-bounce"
+              (click)="handleOpenEditProfileModal()"
+            >
+              <fa-icon
+                [icon]="editIcon"
+                class="text-blue-600"
+              ></fa-icon></button
+          ></span>
+        </p>
+      </div>
+    </div>
+    <div class="border-b flex flex-col gap-5 pt-6 pb-9">
+      <div class="flex gap-2">
+        <p class="border p-5 rounded-md flex gap-2">
+          <fa-icon [icon]="locationIcon"></fa-icon>United States, 3601 Old
+          Capitol Trail, Unit A-7, Suite
+        </p>
+        <p class="border p-5 rounded-md flex gap-2">
+          <fa-icon [icon]="locationIcon"></fa-icon>United States, 3601 Old
+          Capitol Trail, Unit A-7, Suite
+        </p>
+      </div>
+      <button
+        (click)="handleOpenAddressModal()"
+        class="bg-gray-100 self-start border flex items-center gap-3 p-3 rounded-md hover:border-[#ff7900] hover:bg-white hover:ease-linear hover:text-[#ff7900]"
+      >
+        <fa-icon [icon]="addIcon"></fa-icon>ADD NEW ADDRESS
+      </button>
+    </div>
+    <div class="pt-6">
+      <p class="text-xl mb-4">Your orders</p>
+      <div class="flex flex-col gap-5">
+        <app-orders></app-orders>
+        <app-orders></app-orders>
+      </div>
+    </div>
+  </section>
+  @if(openEditProfileModal()&&!openAddressModal()){
+  <section
+    class="w-full h-full top-0 bg-gray-200 bg-opacity-30 backdrop-blur-sm flex flex-col items-center justify-center absolute border"
+  >
+    <button (click)="handleOpenEditProfileModal()" class="self-end mr-10 mb-10">
+      <fa-icon class="text-2xl text-[#ff7900]" [icon]="closeIcon"></fa-icon>
+    </button>
+    <form action="" class="flex rounded-md items-start p-7 gap-10 bg-white">
+      <div class="w-[100px] h-[100px] rounded-full relative border">
+        <button
+          class="w-7 absolute top-16 right-0 h-7 rounded-full bg-[#ff7900] flex items-center justify-center"
+        >
+          <fa-icon class="text-white" [icon]="imageIcon"></fa-icon>
+        </button>
+        <input type="file" class="hidden" />
+      </div>
+      <div class="flex flex-col gap-7">
+        <div class="grid grid-cols-2 gap-5">
+          <app-input type="text" label="Your Name" id="name"></app-input>
+          <app-input type="email" label="Email" id="email"></app-input>
+          <app-input type="text" label="Date of Birth" id="dob"></app-input>
+          <app-input
+            type="text"
+            label="Permanent Address"
+            id="p_address"
+          ></app-input>
+          <app-input type="text" label="Postal Code" id="p_code"></app-input>
+          <app-input type="text" label="Username" id="u_name"></app-input>
+          <app-input type="text" label="City" id="city"></app-input>
+          <app-input type="text" label="Country" id="country"></app-input>
+        </div>
+        <button
+          class="self-end py-3 px-12 rounded-md bg-[#ff7900] text-white text-lg font-bold"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </section>
+  } @if(openAddressModal() && !openEditProfileModal()){
+  <div
+    class="w-full h-full top-0 bg-gray-200 bg-opacity-30 backdrop-blur-sm flex flex-col items-center justify-center absolute border"
+  >
+    <button
+      (click)="handleOpenAddressModal()"
+      class="self-end mr-[200px] mb-16"
+    >
+      <fa-icon class="text-2xl text-[#ff7900]" [icon]="closeIcon"></fa-icon>
+    </button>
+    <form
+      action=""
+      class="rounded-md shadow-md bg-white py-6 px-12 flex flex-col gap-4"
+    >
+      <p class="self-center text-lg font-bold">Address Book</p>
+      <app-input type="text" label="Country" id="country"></app-input>
+      <app-input type="text" label="City" id="city"></app-input>
+      <app-input
+        type="text"
+        label="State/Province/Region"
+        id="location"
+      ></app-input>
+      <app-input type="text" label="ZIP/Postal Code" id="location"></app-input>
+      <button
+        class="text-white font-bold text-lg mt-5 flex items-center justify-center gap-2 h-12 rounded bg-[#ff7900]"
+      >
+        <fa-icon [icon]="addIcon"></fa-icon>
+        <p>Add</p>
+      </button>
+    </form>
+  </div>
+  }
+</div>
