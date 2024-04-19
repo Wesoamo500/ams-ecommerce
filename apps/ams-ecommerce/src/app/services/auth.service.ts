@@ -5,8 +5,11 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
- user = JSON.parse(localStorage.getItem('user')!)
+  user = JSON.parse(localStorage.getItem('user')!)
+ 
  checkAuth(){
-  return !this.user
+  const user = JSON.parse(localStorage.getItem('user')!)
+  return !user
  }
+
 }
