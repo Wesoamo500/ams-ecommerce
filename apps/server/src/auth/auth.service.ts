@@ -27,16 +27,17 @@ export class AuthService {
 
     if (!user) throw new NotFoundException('User not found');
 
-    const isPasswordCorrect = await argon.verify(user.password, password);
+    const isPasswordCorrect = await argon.verify(user.hashedPassword, password);
 
     if (!isPasswordCorrect) throw new UnauthorizedException('Invalid Password');
-
-    return this.signToken(user.id, user.email);
+    const {hashedPassword, ...userData} = user
+    const accessToken = await this.signToken(user.id, user.email);
+    return {userData, accessToken}
   }
   
   
 
-  async signToken(userId: number, email: string): Promise<{}> {
+  async signToken(userId: number, email: string): Promise<string> {
     const payload = {
       userId,
       email,
