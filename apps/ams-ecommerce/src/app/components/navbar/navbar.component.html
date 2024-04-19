@@ -16,10 +16,18 @@
             <div  class="absolute w-4 h-4 rounded-full bg-[#ff7900] left-3 -top-2 flex items-center justify-center text-[10px] text-white">{{numberOf()}}</div>
             <img src="../../assets/images/icon-cart.svg" alt="">
         </button>
-        <div class="w-8">
-            <img src="../../assets/images/image-avatar.png" alt="">
+        <div class="relative">
+            <button (click)="toggleProfile()" class="w-8 cursor-pointer flex items-center gap-3">
+                <img src="../../assets/images/image-avatar.png" alt="">
+                <fa-icon class="text-xl" [icon]="openProfile?arrowUpIcon:arrowDownIcon"></fa-icon>
+            </button>
+            @if(openProfile){<div class="border rounded-md absolute top-12 z-30 bg-white -right-12">
+                <button class="flex items-center gap-3 p-5 text-xl"><a routerLink="/profile"><fa-icon [icon]="userIcon"></fa-icon> profile</a></button>
+                <hr>
+                <button (click)="handleLogout()" class="flex items-center gap-3 p-5 text-xl"><fa-icon [icon]="logoutIcon"></fa-icon> logout</button>
+            </div>}
         </div>
-        <div [class]="open?'':'hidden' && cartService.numberOfProducts===0?'hidden':''" class="absolute bg-white shadow-xl rounded top-10 w-[300px] -right-4">
+        <div [class]="openCart?'':'hidden' && cartService.numberOfProducts===0?'hidden':''" class="absolute bg-white shadow-xl rounded top-10 w-[300px] -right-4">
             <div>
                 <p class="p-4 font-bold">Cart</p>
                 <hr>
