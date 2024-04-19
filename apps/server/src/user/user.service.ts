@@ -12,7 +12,6 @@ export class UserService {
   constructor(@InjectRepository(User) private usersRepository: Repository<User>) { }
   async register(createUserDto: CreateUserDto) {
     const user = await this.findByEmail(createUserDto.email)
-    console.log(user)
     if(user){
       throw new HttpException("User Already Exists", HttpStatus.CONFLICT)
     }
@@ -24,7 +23,7 @@ export class UserService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.usersRepository.findOneBy({id})
   }
 
 
@@ -43,9 +42,10 @@ export class UserService {
   }
 
   private async createUser(dto: CreateUserDto){
-    const hashedPassword = await this.hashedPassword(dto.password)
-    const newUser =  this.usersRepository.create({...dto, password: hashedPassword})
-    return this.usersRepository.save(newUser)
+    const hashedPwd = await this.hashedPassword(dto.password)
+    const newUser =  this.usersRepository.create({...dto,hashedPassword: hashedPwd})
+    const {hashedPassword,...user} = await this.usersRepository.save(newUser)
+    return user
   }
 
   private async hashedPassword(password: string){
