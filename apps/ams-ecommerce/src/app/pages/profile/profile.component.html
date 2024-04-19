@@ -1,0 +1,44 @@
+<section class="h-screen flex w-full">
+  <nav class="border h-full w-1/4">
+    <ul class="flex flex-col p-10 gap-11">
+      <li>
+        <a routerLinkActive="border py-3 px-9" routerLink="./info">Account</a>
+      </li>
+
+      <li>
+        <a routerLinkActive="border py-3 px-9" routerLink="./products-in-carts"
+          >Carts</a
+        >
+      </li>
+
+      <li>
+        <a routerLinkActive="border py-3 px-9" routerLink="./new-orders"
+          >New Orders</a
+        >
+      </li>
+
+      <li>
+        <a routerLinkActive="border py-3 px-9" routerLink="./orders-history"
+          >History</a
+        >
+      </li>
+
+      <li>
+        <a routerLinkActive="border py-3 px-9" routerLink="./wishlist"
+          >My wishlist</a
+        >
+      </li>
+
+      <li>
+        <a routerLinkActive="border py-3 px-9" routerLink="./auction"
+          >Auction Center</a
+        >
+      </li>
+
+      <li>
+        <a routerLinkActive="border py-3 px-9" routerLink="./logout">Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <router-outlet />
+</section>
