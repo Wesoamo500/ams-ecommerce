@@ -15,5 +15,5 @@ export class User {
   email: string
 
   @Column()
-  password: string
+  hashedPassword: string
 }
