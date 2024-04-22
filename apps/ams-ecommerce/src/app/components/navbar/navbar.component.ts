@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
 import { CartItemComponent } from '../cart/cart-item.component';
@@ -26,6 +26,7 @@ export class NavbarComponent {
 
   cartService = inject(CartService);
   authService = inject(AuthService);
+  router = inject(Router)
   openCart = false;
   openProfile = false;
   numberOf() {
@@ -46,8 +47,6 @@ export class NavbarComponent {
 
   handleLogout(){
     localStorage.removeItem('user')
+    this.router.navigateByUrl('/')
   }
-
- 
-  
 }
