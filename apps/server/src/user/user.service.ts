@@ -34,7 +34,6 @@ export class UserService {
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     let user = await this.findOne(id);
-    console.log({...updateUserDto})
     if (!user) throw new NotFoundException('User not Found');
 
     user.firstName = updateUserDto.firstName;
@@ -48,8 +47,6 @@ export class UserService {
     user.profileImage = updateUserDto.profileImage;
 
     const updatedUser = await this.usersRepository.save(user);
-
-    console.log(updatedUser);
     return updatedUser;
   }
 
