@@ -60,31 +60,32 @@
     <button (click)="handleOpenEditProfileModal()" class="self-end mr-10 mb-10">
       <fa-icon class="text-2xl text-[#ff7900]" [icon]="closeIcon"></fa-icon>
     </button>
-    <form action="" class="flex rounded-md items-start p-7 gap-10 bg-white">
+    <form [formGroup]="profileForm"  class="flex rounded-md items-start p-7 gap-10 bg-white">
       <div class="w-[100px] h-[100px] rounded-full relative border">
-        <button
+        <button (click)="triggerFileInput()"
           class="w-7 absolute top-16 right-0 h-7 rounded-full bg-[#ff7900] flex items-center justify-center"
         >
-          <fa-icon class="text-white" [icon]="imageIcon"></fa-icon>
+          <fa-icon  class="text-white" [icon]="imageIcon"></fa-icon>
         </button>
-        <input type="file" class="hidden" />
+        <input type="file" #fileInput (change)="onFileChange($event)" class="hidden" />
       </div>
       <div class="flex flex-col gap-7">
         <div class="grid grid-cols-2 gap-5">
-          <app-input type="text" label="Your Name" id="name"></app-input>
-          <app-input type="email" label="Email" id="email"></app-input>
-          <app-input type="text" label="Date of Birth" id="dob"></app-input>
+          <app-input [control]="getProfileControl('firstName')" type="text" label="First Name" id="firstName"></app-input>
+          <app-input [control]="getProfileControl('lastName')" type="text" label="Last Name" id="lastName"></app-input>
+          <app-input [control]="getProfileControl('email')" type="email" label="Email" id="email"></app-input>
+          <app-input [control]="getProfileControl('dateOfBirth')" type="text" label="Date of Birth" id="dob"></app-input>
           <app-input
+          [control]="getProfileControl('permanentAddress')"
             type="text"
             label="Permanent Address"
             id="p_address"
           ></app-input>
-          <app-input type="text" label="Postal Code" id="p_code"></app-input>
-          <app-input type="text" label="Username" id="u_name"></app-input>
-          <app-input type="text" label="City" id="city"></app-input>
-          <app-input type="text" label="Country" id="country"></app-input>
+          <app-input [control]="getProfileControl('postalCode')" type="text" label="Postal Code" id="p_code"></app-input>
+          <app-input [control]="getProfileControl('city')" type="text" label="City" id="city"></app-input>
+          <app-input [control]="getProfileControl('country')" type="text" label="Country" id="country"></app-input>
         </div>
-        <button
+        <button  (submit)="handleUpdateProfile()"
           class="self-end py-3 px-12 rounded-md bg-[#ff7900] text-white text-lg font-bold"
         >
           Save
