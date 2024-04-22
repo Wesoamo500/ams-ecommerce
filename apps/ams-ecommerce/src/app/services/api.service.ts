@@ -17,6 +17,10 @@ export class ApiService {
     return this.http.post(`${this.API_URL}/auth/login`, data)
   }
   fetchProfileData() {
-    return this.http.get(`${this.API_URL}/user/${this.authService.user.userData.id}`) // Replace with your actual API endpoint
+    return this.http.get(`${this.API_URL}/user/${this.authService.user.userData.id}`)
+  }
+
+  updateProfile(data: any){
+    return this.http.patch(`${this.API_URL}/user/${this.authService.user.userData.id}`, {...data})
   }
 }
