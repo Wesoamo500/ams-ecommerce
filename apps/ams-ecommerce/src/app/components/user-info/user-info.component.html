@@ -14,11 +14,11 @@
       <div>
         <p>{{userName()}}</p>
         <p class="flex items-center gap-3">
-          <span>Email: {{userEmail()}}</span>,
-          <span>Phone: +123456789</span
+          <span><fa-icon [icon]="mailIcon" class="text-blue-600 mr-2"></fa-icon> {{userEmail()}}</span>,
+          <span><fa-icon [icon]="phoneIcon" class="text-blue-600 mr-2"></fa-icon> {{phoneNumber()}}</span
           ><span
             ><button
-              class="hover:animate-bounce"
+              class="hover:animate-bounce ml-20"
               (click)="handleOpenEditProfileModal()"
             >
               <fa-icon
@@ -84,6 +84,7 @@
             label="Permanent Address"
             id="p_address"
           ></app-input>
+          <app-input [control]="getProfileControl('phoneNumber')" type="tel" label="Phone Number" id="phoneNumber"></app-input>
           <app-input [control]="getProfileControl('postalCode')" type="text" label="Postal Code" id="p_code"></app-input>
           <app-input [control]="getProfileControl('city')" type="text" label="City" id="city"></app-input>
           <app-input [control]="getProfileControl('country')" type="text" label="Country" id="country"></app-input>
