@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faAdd, faClose, faEdit,  faLocationDot, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faClose, faEdit,  faEnvelope,  faLocationDot, faPen, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { OrdersComponent } from "../orders/orders.component";
 import { InputComponent } from "../input/input.component";
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +24,8 @@ export class UserInfoComponent{
   addIcon = faAdd
   imageIcon = faPen
   closeIcon = faClose
+  mailIcon = faEnvelope
+  phoneIcon = faPhone
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>
 
@@ -33,6 +35,7 @@ export class UserInfoComponent{
   userName = signal(`${this.authService.getItem('firstName')} ${this.authService.getItem('lastName')}`)
   userProfile = signal(this.authService.getItem('profileImage'))
   userProfileChange = signal(this.authService.getItem('profileImage'));
+  phoneNumber = signal(this.authService.getItem('phoneNumber'))
 
   profileForm = this.fb.group({
     id: this.authService.user.userData.id,
@@ -44,6 +47,7 @@ export class UserInfoComponent{
     permanentAddress: this.authService.user.userData.permanentAddress,
     lastName: this.authService.user.userData.lastName,
     country: this.authService.user.userData.country,
+    phoneNumber: this.authService.user.userData.phoneNumber,
     profileImage: this.userProfile()
   })
 
