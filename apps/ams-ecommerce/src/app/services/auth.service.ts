@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +15,7 @@ export class AuthService {
  setUserLocalStorage(user: any){
   localStorage.setItem('user', JSON.stringify(user))
  }
-
+ getItem(key: string){
+  return this.user.userData[key]
+ }
 }
