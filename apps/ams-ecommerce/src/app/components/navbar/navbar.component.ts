@@ -32,6 +32,13 @@ export class NavbarComponent {
   numberOf() {
     return this.cartService.numberOfProducts;
   }
+  avatar(){
+    if(!this.authService.checkAuth() && this.authService.getItem('profileImage')){
+      return this.authService.getItem('profileImage');
+    }
+    return '../../assets/images/image-avatar.png'
+   }
+  
   checkAuth() {
     return this.authService.checkAuth();
   }
