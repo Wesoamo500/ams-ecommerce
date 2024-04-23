@@ -47,7 +47,7 @@
         placeholder="Correct Password"
       /> </label
     >}
-    @if(displayError()&&!isLogin){<p class="text-red-500">
+    @if(!displayError()&&!isLogin){<p class="text-red-500">
       password does not match
     </p>}
     <button class="text-white bg-[#ff7900] p-3 rounded-md font-bold">
