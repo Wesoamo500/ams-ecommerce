@@ -46,7 +46,7 @@ export class UserService {
     user.postalCode = updateUserDto.postalCode;
     user.profileImage = updateUserDto.profileImage;
 
-    const updatedUser = await this.usersRepository.save(user);
+    const {hashedPassword,...updatedUser} = await this.usersRepository.save(user);
     return updatedUser;
   }
 
