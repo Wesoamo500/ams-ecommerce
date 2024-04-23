@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAdd, faClose, faEdit,  faLocationDot, faPen } from '@fortawesome/free-solid-svg-icons';
 import { OrdersComponent } from "../orders/orders.component";
@@ -29,6 +29,10 @@ export class UserInfoComponent{
 
   openEditProfileModal = signal(false)
   openAddressModal = signal(false)
+  userEmail = signal(this.authService.getItem('email'))
+  userName = signal(`${this.authService.getItem('firstName')} ${this.authService.getItem('lastName')}`)
+  userProfile = signal(this.authService.getItem('profileImage'))
+  userProfileChange = signal(this.authService.getItem('profileImage'));
 
   profileForm = this.fb.group({
     id: this.authService.user.userData.id,
@@ -39,13 +43,56 @@ export class UserInfoComponent{
     city: this.authService.user.userData.city,
     permanentAddress: this.authService.user.userData.permanentAddress,
     lastName: this.authService.user.userData.lastName,
-    country: this.authService.user.userData.country
+    country: this.authService.user.userData.country,
+    profileImage: this.userProfile()
   })
 
   onFileChange(event: any) {
     const fileList: FileList = event.target.files;
-    console.log(fileList)
+    if (fileList.length > 0) {
+      const file = fileList[0];
+  
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            const MAX_WIDTH = 800;
+            const MAX_HEIGHT = 600;
+            let width = img.width;
+            let height = img.height;
+  
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+  
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx?.drawImage(img, 0, 0, width, height);
+            const base64String = canvas.toDataURL('image/jpeg', 0.5);
+            this.userProfileChange.update(()=> base64String);
+            this.profileForm.patchValue({ profileImage: base64String });
+          };
+  
+          img.src = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        console.error('Please select an image file.');
+      }
+    }
   }
+  
   triggerFileInput() {
     this.fileInput.nativeElement.click();
   }
