@@ -25,6 +25,7 @@ import { Address } from '../user/entities/address.entity';
     UserModule,
     AuthModule
   ],
+  exports:[TypeOrmModule]
 })
 export class AppModule { 
   constructor(private dataSource: DataSource){}
