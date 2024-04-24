@@ -10,11 +10,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as argon from 'argon2';
+import { AddressDto } from './dto/address.dto';
+import { Address } from './entities/address.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private usersRepository: Repository<User>
+    @InjectRepository(User) private usersRepository: Repository<User>,
+    @InjectRepository(User) private addressRepository: Repository<Address>
   ) {}
   async register(createUserDto: CreateUserDto) {
     const user = await this.findByEmail(createUserDto.email);
@@ -53,6 +56,21 @@ export class UserService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async addAddress(id: string, addressDto:AddressDto) {
+    let user = await this.findOne(id);
+    if (!user) throw new NotFoundException('User not Found');
+
+    const newAddress = this.addressRepository.create(addressDto)
+
+    const address = await this.addressRepository.save(newAddress)
+
+    user.addresses.push(address)
+
+    const {hashedPassword,...updatedUser} = await this.usersRepository.save(user);
+
+    return updatedUser;
   }
 
   public async findByEmail(email: string) {
