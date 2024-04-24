@@ -1,7 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AddressDto } from './dto/address.dto';
+import { JwtGuard } from '../auth/guard';
+import { GetUser } from '../auth/decorator';
 
 @Controller('user')
 export class UserController {
@@ -10,6 +13,13 @@ export class UserController {
   @Post('register')
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.register(createUserDto);
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('addAddress')
+  async addAddress(@GetUser('id') id: string, @Body() addressDto: AddressDto){
+    console.log(id, addressDto)
+    return this.userService.addAddress(id, addressDto)
   }
 
   @Get()
