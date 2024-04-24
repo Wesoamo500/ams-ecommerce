@@ -16,9 +16,8 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       secretOrKey: config.get('JWT_SECRET'),
     });
   }
-
-  async validate(payload: { userId: number; email: string }) {
-    const user = await this.userService.findByEmail(payload.email)
+  async validate(payload: { id: string; email: string }) {
+    const user = await this.userService.findByEmail(payload.id)
     const {hashedPassword, ...result} = user
     return result;
   }
