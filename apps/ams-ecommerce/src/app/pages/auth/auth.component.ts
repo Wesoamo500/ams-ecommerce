@@ -47,7 +47,6 @@ export class AuthComponent implements OnInit {
 
   handleAuthentication(){
    if(this.isLogin){
-    console.log('auth')
     this.apiService.login(this.authForm.value).subscribe({
       next:(v)=>{
         localStorage.setItem('user', JSON.stringify(v))
