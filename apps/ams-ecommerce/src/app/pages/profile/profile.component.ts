@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import {  RouterModule } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ApiService } from '../../services/api.service';
 import { AsyncPipe, JsonPipe } from '@angular/common';
@@ -21,7 +20,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
       
-        this.fetchProfileData();
+    this.fetchProfileData();
       
   }
 
