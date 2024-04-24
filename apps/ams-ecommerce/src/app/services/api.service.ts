@@ -23,4 +23,8 @@ export class ApiService {
   updateProfile(data: any){
     return this.http.patch(`${this.API_URL}/user/${this.authService.user.userData.id}`, {...data})
   }
+
+  addAddress(data: any){
+    return this.http.post(`${this.API_URL}/user/addAddress`, {...data}, {headers: {'Authorization':`Bearer ${this.authService.user.accessToken}`}})
+  }
 }
