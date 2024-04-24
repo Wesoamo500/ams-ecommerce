@@ -6,6 +6,8 @@ import { InputComponent } from "../input/input.component";
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
+import { AddressFormComponent } from "../address-form/address-form.component";
+import { SharedService } from '../../services/shared.service';
 
 
 @Component({
@@ -13,12 +15,13 @@ import { AuthService } from '../../services/auth.service';
     standalone: true,
     templateUrl: './user-info.component.html',
     styleUrl: './user-info.component.css',
-    imports: [FontAwesomeModule, OrdersComponent, InputComponent, ReactiveFormsModule]
+    imports: [FontAwesomeModule, OrdersComponent, InputComponent, ReactiveFormsModule, AddressFormComponent]
 })
 export class UserInfoComponent{
   fb = inject(FormBuilder)
   apiService = inject(ApiService)
   authService = inject(AuthService)
+  sharedService = inject(SharedService)
   editIcon = faEdit
   locationIcon = faLocationDot
   addIcon = faAdd
@@ -30,7 +33,7 @@ export class UserInfoComponent{
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>
 
   openEditProfileModal = signal(false)
-  openAddressModal = signal(false)
+  openAddressModal = this.sharedService.openAddressModal
   userEmail = signal(this.authService.getItem('email'))
   userName = signal(`${this.authService.getItem('firstName')} ${this.authService.getItem('lastName')}`)
   userProfile = signal(this.authService.getItem('profileImage'))
@@ -110,7 +113,7 @@ export class UserInfoComponent{
   }
 
   handleOpenAddressModal(){
-    this.openAddressModal.update((prev)=>!prev)
+    return this.sharedService.handleOpenAddressModal()
   }
 
   handleUpdateProfile(){
