@@ -1,0 +1,48 @@
+<div
+  class="w-full h-full top-0 bg-gray-200 bg-opacity-30 backdrop-blur-sm flex flex-col items-center justify-center absolute border"
+>
+  <button
+    type="button"
+    (click)="handleOpenAddressModal()"
+    class="self-end mr-[200px] mb-16"
+  >
+    <fa-icon class="text-2xl text-[#ff7900]" [icon]="closeIcon"></fa-icon>
+  </button>
+  <form [formGroup]="addressForm"
+    (submit)="handleAddAddress()"
+    action=""
+    class="rounded-md shadow-md bg-white py-6 px-12 flex flex-col gap-4"
+  >
+    <p class="self-center text-lg font-bold">Address Book</p>
+    <app-input
+      type="text"
+      [control]="getAddressControl('country')"
+      label="Country"
+      id="country"
+    ></app-input>
+    <app-input
+      type="text"
+      [control]="getAddressControl('city')"
+      label="City"
+      id="city"
+    ></app-input>
+    <app-input
+      type="text"
+      [control]="getAddressControl('state')"
+      label="State/Province/Region"
+      id="location"
+    ></app-input>
+    <app-input
+      type="text"
+      [control]="getAddressControl('zipCode')"
+      label="ZIP/Postal Code"
+      id="location"
+    ></app-input>
+    <button type="submit"
+      class="text-white font-bold text-lg mt-5 flex items-center justify-center gap-2 h-12 rounded bg-[#ff7900]"
+    >
+      <fa-icon [icon]="addIcon"></fa-icon>
+      <p>Add</p>
+    </button>
+  </form>
+</div>
