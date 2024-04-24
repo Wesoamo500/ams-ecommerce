@@ -31,21 +31,20 @@ export class AuthService {
 
     if (!isPasswordCorrect) throw new UnauthorizedException('Invalid Password');
     const {hashedPassword, ...userData} = user
-    const accessToken = await this.signToken(user.id, user.email);
+    const accessToken = this.signToken(user.id, user.email);
     return {userData, accessToken}
   }
   
   
 
-  async signToken(userId: string, email: string): Promise<string> {
+   signToken(userId: string, email: string){
     const payload = {
       userId,
       email,
     };
     const secret = this.config.get('JWT_SECRET');
 
-    const token = await this.jwt.signAsync(payload, {
-      expiresIn: '15m',
+    const token = this.jwt.sign(payload, {
       secret: secret,
     });
 
