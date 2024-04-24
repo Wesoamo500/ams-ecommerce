@@ -18,8 +18,13 @@ export class UserController {
   @UseGuards(JwtGuard)
   @Post('addAddress')
   async addAddress(@GetUser('id') id: string, @Body() addressDto: AddressDto){
-    console.log(id, addressDto)
     return this.userService.addAddress(id, addressDto)
+  }
+
+  @UseGuards(JwtGuard)
+  @Get('address')
+  findAddress(@GetUser('id') id: string) {
+    return this.userService.fetchAddress(id);
   }
 
   @Get()
