@@ -9,13 +9,18 @@
   <section class="p-14">
     <div class="flex items-center gap-6 border-b pb-9 w-[770px]">
       <div class="w-14 h-14 border rounded-full">
-        <img [src]="userProfileChange()" class="w-full rounded-full" alt="">
+        <img [src]="userProfileChange()" class="w-full rounded-full" alt="" />
       </div>
       <div>
-        <p>{{userName()}}</p>
+        <p>{{ userName() }}</p>
         <p class="flex items-center gap-3">
-          <span><fa-icon [icon]="mailIcon" class="text-blue-600 mr-2"></fa-icon> {{userEmail()}}</span>,
-          <span><fa-icon [icon]="phoneIcon" class="text-blue-600 mr-2"></fa-icon> {{phoneNumber()}}</span
+          <span
+            ><fa-icon [icon]="mailIcon" class="text-[#ff7900] mr-2"></fa-icon>
+            {{ userEmail() }}</span
+          >,
+          <span
+            ><fa-icon [icon]="phoneIcon" class="text-[#ff7900] mr-2"></fa-icon>
+            {{ phoneNumber() }}</span
           ><span
             ><button
               class="hover:animate-bounce ml-20"
@@ -23,7 +28,7 @@
             >
               <fa-icon
                 [icon]="editIcon"
-                class="text-blue-600"
+                class="text-[#ff7900]"
               ></fa-icon></button
           ></span>
         </p>
@@ -40,9 +45,9 @@
           Capitol Trail, Unit A-7, Suite
         </p>
       </div>
-      <button
+      <button type="button"
         (click)="handleOpenAddressModal()"
-        class="bg-gray-100 self-start border flex items-center gap-3 p-3 rounded-md hover:border-[#ff7900] hover:bg-white hover:ease-linear hover:text-[#ff7900]"
+        class="bg-[#ff7900] self-start text-white flex items-center gap-3 p-3 rounded-md hover:border hover:border-[#ff7900] hover:bg-white hover:ease-linear hover:text-[#ff7900]"
       >
         <fa-icon [icon]="addIcon"></fa-icon>ADD NEW ADDRESS
       </button>
@@ -62,34 +67,86 @@
     <button (click)="handleOpenEditProfileModal()" class="self-end mr-10 mb-10">
       <fa-icon class="text-2xl text-[#ff7900]" [icon]="closeIcon"></fa-icon>
     </button>
-    <form [formGroup]="profileForm" (submit)="handleUpdateProfile()"  class="flex rounded-md items-start p-7 gap-10 bg-white">
+    <form
+      [formGroup]="profileForm"
+      (submit)="handleUpdateProfile()"
+      class="flex rounded-md items-start p-7 gap-10 bg-white"
+    >
       <div class="w-[100px] h-[100px] rounded-full relative border">
-        <img [src]="userProfileChange()" class="w-full rounded-full" alt="">
-        <button type="button" (click)="triggerFileInput()"
+        <img [src]="userProfileChange()" class="w-full rounded-full" alt="" />
+        <button
+          type="button"
+          (click)="triggerFileInput()"
           class="w-7 absolute top-16 right-0 h-7 rounded-full bg-[#ff7900] flex items-center justify-center"
         >
-          <fa-icon  class="text-white" [icon]="imageIcon"></fa-icon>
+          <fa-icon class="text-white" [icon]="imageIcon"></fa-icon>
         </button>
-        <input type="file" #fileInput (change)="onFileChange($event)" class="hidden" />
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileChange($event)"
+          class="hidden"
+        />
       </div>
       <div class="flex flex-col gap-7">
         <div class="grid grid-cols-2 gap-5">
-          <app-input [control]="getProfileControl('firstName')" type="text" label="First Name" id="firstName"></app-input>
-          <app-input [control]="getProfileControl('lastName')" type="text" label="Last Name" id="lastName"></app-input>
-          <app-input [control]="getProfileControl('email')" type="email" label="Email" id="email"></app-input>
-          <app-input [control]="getProfileControl('dateOfBirth')" type="text" label="Date of Birth" id="dob"></app-input>
           <app-input
-          [control]="getProfileControl('permanentAddress')"
+            [control]="getProfileControl('firstName')"
+            type="text"
+            label="First Name"
+            id="firstName"
+          ></app-input>
+          <app-input
+            [control]="getProfileControl('lastName')"
+            type="text"
+            label="Last Name"
+            id="lastName"
+          ></app-input>
+          <app-input
+            [control]="getProfileControl('email')"
+            type="email"
+            label="Email"
+            id="email"
+          ></app-input>
+          <app-input
+            [control]="getProfileControl('dateOfBirth')"
+            type="text"
+            label="Date of Birth"
+            id="dob"
+          ></app-input>
+          <app-input
+            [control]="getProfileControl('permanentAddress')"
             type="text"
             label="Permanent Address"
             id="p_address"
           ></app-input>
-          <app-input [control]="getProfileControl('phoneNumber')" type="tel" label="Phone Number" id="phoneNumber"></app-input>
-          <app-input [control]="getProfileControl('postalCode')" type="text" label="Postal Code" id="p_code"></app-input>
-          <app-input [control]="getProfileControl('city')" type="text" label="City" id="city"></app-input>
-          <app-input [control]="getProfileControl('country')" type="text" label="Country" id="country"></app-input>
+          <app-input
+            [control]="getProfileControl('phoneNumber')"
+            type="tel"
+            label="Phone Number"
+            id="phoneNumber"
+          ></app-input>
+          <app-input
+            [control]="getProfileControl('postalCode')"
+            type="text"
+            label="Postal Code"
+            id="p_code"
+          ></app-input>
+          <app-input
+            [control]="getProfileControl('city')"
+            type="text"
+            label="City"
+            id="city"
+          ></app-input>
+          <app-input
+            [control]="getProfileControl('country')"
+            type="text"
+            label="Country"
+            id="country"
+          ></app-input>
         </div>
-        <button  type="submit"
+        <button
+          type="submit"
           class="self-end py-3 px-12 rounded-md bg-[#ff7900] text-white text-lg font-bold"
         >
           Save
@@ -98,35 +155,6 @@
     </form>
   </section>
   } @if(openAddressModal() && !openEditProfileModal()){
-  <div
-    class="w-full h-full top-0 bg-gray-200 bg-opacity-30 backdrop-blur-sm flex flex-col items-center justify-center absolute border"
-  >
-    <button
-      (click)="handleOpenAddressModal()"
-      class="self-end mr-[200px] mb-16"
-    >
-      <fa-icon class="text-2xl text-[#ff7900]" [icon]="closeIcon"></fa-icon>
-    </button>
-    <form
-      action=""
-      class="rounded-md shadow-md bg-white py-6 px-12 flex flex-col gap-4"
-    >
-      <p class="self-center text-lg font-bold">Address Book</p>
-      <app-input type="text" label="Country" id="country"></app-input>
-      <app-input type="text" label="City" id="city"></app-input>
-      <app-input
-        type="text"
-        label="State/Province/Region"
-        id="location"
-      ></app-input>
-      <app-input type="text" label="ZIP/Postal Code" id="location"></app-input>
-      <button
-        class="text-white font-bold text-lg mt-5 flex items-center justify-center gap-2 h-12 rounded bg-[#ff7900]"
-      >
-        <fa-icon [icon]="addIcon"></fa-icon>
-        <p>Add</p>
-      </button>
-    </form>
-  </div>
+  <app-address-form></app-address-form>
   }
 </div>
