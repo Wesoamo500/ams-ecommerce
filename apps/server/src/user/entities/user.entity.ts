@@ -41,7 +41,4 @@ export class User {
 
   @Column({nullable: true})
   dateOfBirth: string;
-
-  @OneToMany(() => Address, (address)=>address.user)
-  addresses: Address[];
 }
