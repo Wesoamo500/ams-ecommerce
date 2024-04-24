@@ -29,7 +29,11 @@ export class AddressFormComponent {
   })
 
   handleAddAddress(){
-    this.apiService.addAddress(this.addressForm.value).subscribe(v=>console.log(v))
+    this.apiService.addAddress(this.addressForm.value).subscribe({
+      next: (data: any)=>{
+        this.sharedServices.addresses.next(data);
+      }
+    })
   }
   getAddressControl(name: string){
     return this.addressForm.get(name) as FormControl
