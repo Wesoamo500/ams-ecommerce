@@ -17,7 +17,7 @@ import { Address } from './entities/address.entity';
 export class UserService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
-    @InjectRepository(User) private addressRepository: Repository<Address>
+    @InjectRepository(Address) private addressRepository: Repository<Address>
   ) {}
   async register(createUserDto: CreateUserDto) {
     const user = await this.findByEmail(createUserDto.email);
@@ -59,18 +59,23 @@ export class UserService {
   }
 
   async addAddress(id: string, addressDto:AddressDto) {
-    let user = await this.findOne(id);
+    const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not Found');
-
     const newAddress = this.addressRepository.create(addressDto)
+    await this.addressRepository.save({...newAddress, user})
+    
+    const addresses = await this.addressRepository.find({
+      where: {user: {id}}
+    })
 
-    const address = await this.addressRepository.save(newAddress)
+    return addresses;
+  }
 
-    user.addresses.push(address)
-
-    const {hashedPassword,...updatedUser} = await this.usersRepository.save(user);
-
-    return updatedUser;
+  async fetchAddress(id: string){
+    await this.usersRepository.findOneByOrFail({id})
+    return await this.addressRepository.find({
+      where: {user: {id}}
+    })
   }
 
   public async findByEmail(email: string) {
