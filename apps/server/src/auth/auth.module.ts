@@ -7,9 +7,10 @@ import { UserService } from '../user/user.service';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
+import { Address } from '../user/entities/address.entity';
 
 @Module({
-  imports: [JwtModule.register({}), TypeOrmModule.forFeature([User])],
+  imports: [JwtModule.register({}), TypeOrmModule.forFeature([User,Address])],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, UserService, ConfigService],
 })
