@@ -35,17 +35,19 @@
       </div>
     </div>
     <div class="border-b flex flex-col gap-5 pt-6 pb-9">
-      <div class="flex gap-2">
+      <div
+        class="grid grid-cols-2 gap-2"
+        *ngIf="addresses | async as addresses"
+      >
+        @for(address of addresses; track address.id){
         <p class="border p-5 rounded-md flex gap-2">
-          <fa-icon [icon]="locationIcon"></fa-icon>United States, 3601 Old
-          Capitol Trail, Unit A-7, Suite
+          <fa-icon [icon]="locationIcon"></fa-icon>{{ address.country }},
+          {{ address.city }}, {{ address.state }}, {{ address.zipCode }}
         </p>
-        <p class="border p-5 rounded-md flex gap-2">
-          <fa-icon [icon]="locationIcon"></fa-icon>United States, 3601 Old
-          Capitol Trail, Unit A-7, Suite
-        </p>
+        }
       </div>
-      <button type="button"
+      <button
+        type="button"
         (click)="handleOpenAddressModal()"
         class="bg-[#ff7900] self-start text-white flex items-center gap-3 p-3 rounded-md hover:border hover:border-[#ff7900] hover:bg-white hover:ease-linear hover:text-[#ff7900]"
       >

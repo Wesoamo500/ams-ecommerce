@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAdd, faClose, faEdit,  faEnvelope,  faLocationDot, faPen, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { OrdersComponent } from "../orders/orders.component";
@@ -8,6 +8,8 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { AddressFormComponent } from "../address-form/address-form.component";
 import { SharedService } from '../../services/shared.service';
+import { BehaviorSubject } from 'rxjs';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 
 @Component({
@@ -15,9 +17,9 @@ import { SharedService } from '../../services/shared.service';
     standalone: true,
     templateUrl: './user-info.component.html',
     styleUrl: './user-info.component.css',
-    imports: [FontAwesomeModule, OrdersComponent, InputComponent, ReactiveFormsModule, AddressFormComponent]
+    imports: [FontAwesomeModule, OrdersComponent, InputComponent, ReactiveFormsModule, AddressFormComponent, NgIf, AsyncPipe]
 })
-export class UserInfoComponent{
+export class UserInfoComponent implements OnInit{
   fb = inject(FormBuilder)
   apiService = inject(ApiService)
   authService = inject(AuthService)
@@ -39,6 +41,8 @@ export class UserInfoComponent{
   userProfile = signal(this.authService.getItem('profileImage'))
   userProfileChange = signal(this.authService.getItem('profileImage'));
   phoneNumber = signal(this.authService.getItem('phoneNumber'))
+
+  addresses = this.sharedService.addresses
 
   profileForm = this.fb.group({
     id: this.authService.user.userData.id,
@@ -100,6 +104,13 @@ export class UserInfoComponent{
     }
   }
   
+  ngOnInit(): void {
+    this.apiService.fetchAddress().subscribe((data:any) => {
+      this.sharedService.addresses.next(data);
+    });
+  }
+
+
   triggerFileInput() {
     this.fileInput.nativeElement.click();
   }
