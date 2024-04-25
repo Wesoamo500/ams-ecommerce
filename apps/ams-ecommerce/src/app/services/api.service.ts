@@ -10,7 +10,7 @@ export class ApiService {
   constructor(private http: HttpClient){}
   API_URL = 'http://localhost:3000/api'
   headers = new HttpHeaders({
-    Authorization: `Bearer ${this.authService.user.accessToken}`
+    Authorization: `Bearer ${this.authService?.user?.accessToken}`
   });
 
   options = {headers: this.headers };
