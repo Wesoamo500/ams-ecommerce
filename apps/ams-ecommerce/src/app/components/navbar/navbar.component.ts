@@ -10,13 +10,15 @@ import {
   faArrowDown,
   faArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
+import { SharedService } from '../../services/shared.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
-  imports: [RouterLink, RouterLinkActive, CartItemComponent, FontAwesomeModule],
+  imports: [RouterLink, RouterLinkActive, CartItemComponent, FontAwesomeModule, AsyncPipe],
 })
 export class NavbarComponent {
   userIcon = faUser;
@@ -26,18 +28,15 @@ export class NavbarComponent {
 
   cartService = inject(CartService);
   authService = inject(AuthService);
+  sharedService = inject(SharedService)
   router = inject(Router)
   openCart = false;
   openProfile = false;
   numberOf() {
     return this.cartService.numberOfProducts;
   }
-  avatar(){
-    if(!this.authService.checkAuth() && this.authService.getItem('profileImage')){
-      return this.authService.getItem('profileImage');
-    }
-    return '../../assets/images/image-avatar.png'
-   }
+  avatar = this.sharedService.profile
+   
   
   checkAuth() {
     return this.authService.checkAuth();
