@@ -5,6 +5,7 @@ import { faAdd, faClose } from '@fortawesome/free-solid-svg-icons';
 import { SharedService } from '../../services/shared.service';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-address-form',
@@ -17,6 +18,7 @@ export class AddressFormComponent {
   fb = inject(FormBuilder)
   sharedServices = inject(SharedService)
   apiService = inject(ApiService)
+  toastr = inject(ToastrService)
   openAddressModal = this.sharedServices.openAddressModal();
   addIcon = faAdd
   closeIcon = faClose
@@ -32,6 +34,12 @@ export class AddressFormComponent {
     this.apiService.addAddress(this.addressForm.value).subscribe({
       next: (data: any)=>{
         this.sharedServices.addresses.next(data);
+        this.sharedServices.openAddressModal.update(prev => !prev)
+        this.toastr.success('Address added successful')
+
+      },
+      error:(err)=>{
+        this.toastr.error(err.error.message)
       }
     })
   }
