@@ -9,7 +9,7 @@
   <section class="p-14">
     <div class="flex items-center gap-6 border-b pb-9 w-[770px]">
       <div class="w-14 h-14 border rounded-full">
-        <img [src]="userProfileChange()" class="w-full rounded-full" alt="" />
+        <img [src]="userProfileChange | async" class="w-full rounded-full" alt="" />
       </div>
       <div>
         <p>{{ userName() }}</p>
@@ -20,7 +20,7 @@
           >,
           <span
             ><fa-icon [icon]="phoneIcon" class="text-[#ff7900] mr-2"></fa-icon>
-            {{ phoneNumber() }}</span
+            {{ phoneNumber | async }}</span
           ><span
             ><button
               class="hover:animate-bounce ml-20"
@@ -75,7 +75,7 @@
       class="flex rounded-md items-start p-7 gap-10 bg-white"
     >
       <div class="w-[100px] h-[100px] rounded-full relative border">
-        <img [src]="userProfileChange()" class="w-full rounded-full" alt="" />
+        <img [src]="userProfileChange |async" class="w-full rounded-full" alt="" />
         <button
           type="button"
           (click)="triggerFileInput()"
