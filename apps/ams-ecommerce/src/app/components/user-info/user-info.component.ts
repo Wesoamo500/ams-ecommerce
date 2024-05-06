@@ -8,8 +8,9 @@ import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
 import { AddressFormComponent } from "../address-form/address-form.component";
 import { SharedService } from '../../services/shared.service';
-import { BehaviorSubject } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class UserInfoComponent implements OnInit{
   apiService = inject(ApiService)
   authService = inject(AuthService)
   sharedService = inject(SharedService)
+  toastr  = inject(ToastrService)
   editIcon = faEdit
   locationIcon = faLocationDot
   addIcon = faAdd
@@ -39,8 +41,8 @@ export class UserInfoComponent implements OnInit{
   userEmail = signal(this.authService.getItem('email'))
   userName = signal(`${this.authService.getItem('firstName')} ${this.authService.getItem('lastName')}`)
   userProfile = signal(this.authService.getItem('profileImage'))
-  userProfileChange = signal(this.authService.getItem('profileImage'));
-  phoneNumber = signal(this.authService.getItem('phoneNumber'))
+  userProfileChange = new BehaviorSubject(this.authService.getItem('profileImage'));
+  phoneNumber = new BehaviorSubject(this.authService.getItem('phoneNumber'))
 
   addresses = this.sharedService.addresses
 
@@ -91,7 +93,8 @@ export class UserInfoComponent implements OnInit{
             const ctx = canvas.getContext('2d');
             ctx?.drawImage(img, 0, 0, width, height);
             const base64String = canvas.toDataURL('image/jpeg', 0.5);
-            this.userProfileChange.update(()=> base64String);
+            this.userProfileChange.next(base64String);
+            this.sharedService.profile.next(base64String)
             this.profileForm.patchValue({ profileImage: base64String });
           };
   
@@ -129,11 +132,16 @@ export class UserInfoComponent implements OnInit{
 
   handleUpdateProfile(){
     this.apiService.updateProfile(this.profileForm.value).subscribe({
-      next: (v)=>{
+      next: (v: any)=>{
         this.openEditProfileModal.update((prev)=>!prev)
+        this.phoneNumber.next(v.phoneNumber)
+        this.sharedService.profile.next(v.profileImage)
         const user = {...this.authService.user, userData: v}
         this.authService.setUserLocalStorage(user)
-        alert('update successful')
+        this.toastr.success('update successful')
+      }, 
+      error:(err)=>{
+        this.toastr.error(err.error.message)
       }
     })
   }
