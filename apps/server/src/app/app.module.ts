@@ -7,6 +7,8 @@ import { DataSource } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { AuthModule } from '../auth/auth.module';
 import { Address } from '../user/entities/address.entity';
+import { Product } from '../products/entities/product.entity';
+import { ProductsModule } from '../products/products.module';
 
 
 @Module({
@@ -19,11 +21,13 @@ import { Address } from '../user/entities/address.entity';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD as string,
       database: process.env.POSTGRES_DATABASE,
-      entities: [User, Address],
-      synchronize: true
+      entities: [User, Address, Product],
+      synchronize: true,
+      autoLoadEntities: true
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    ProductsModule
   ],
   exports:[TypeOrmModule]
 })
