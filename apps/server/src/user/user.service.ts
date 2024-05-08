@@ -62,20 +62,33 @@ export class UserService {
     const user = await this.findOne(id);
     if (!user) throw new NotFoundException('User not Found');
     const newAddress = this.addressRepository.create(addressDto)
-    await this.addressRepository.save({...newAddress, user})
+    newAddress.user = user
+    await this.addressRepository.save(newAddress)
     
     const addresses = await this.addressRepository.find({
-      where: {user: {id}}
-    })
-
+      where: {
+        user: user
+      },
+      relations: ['user'] 
+    });
+  
     return addresses;
   }
 
-  async fetchAddress(id: string){
-    await this.usersRepository.findOneByOrFail({id})
-    return await this.addressRepository.find({
-      where: {user: {id}}
+  async fetchAddress(id: string) {
+    const user = await this.usersRepository.findOneOrFail({where: {id}}); // Corrected method name and parameter
+    const addresses = await this.addressRepository.find({
+      where: {
+        user
+      }
+    });
+
+    const query = this.addressRepository.createQueryBuilder('address')
+    query.leftJoinAndSelect('address.user', 'user')
+    query.where('user = :user', {
+      user
     })
+    return addresses;
   }
 
   public async findByEmail(email: string) {
