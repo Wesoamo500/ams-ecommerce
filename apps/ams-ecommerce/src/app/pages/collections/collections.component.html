@@ -1,1 +1,9 @@
-<p>collections</p>
+@if((products$ | async); as products){
+<div class="border h-screen overflow-auto grid grid-cols-4 gap-4 p-8">
+    @for(product of products; track product.productId){
+        <app-product-card class="mb-6" [product]="product"></app-product-card>
+    }
+</div>
+} @else {
+<div>Loading</div>
+}
