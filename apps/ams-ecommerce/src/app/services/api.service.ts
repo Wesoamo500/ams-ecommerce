@@ -37,4 +37,8 @@ export class ApiService {
   fetchAddress(){
     return this.http.get(`${this.API_URL}/user/address/`, this.options)
   }
+
+  fetchProduct(){
+    return this.http.get<any>(`${this.API_URL}/products`)
+  }
 }
